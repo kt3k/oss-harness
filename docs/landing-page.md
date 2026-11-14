@@ -1,71 +1,123 @@
-# ライブラリの LP（ランディングページ）の見せ方
+# Presenting a library landing page
 
-OSS ライブラリの LP、特にファーストビュー（ヒーロー）に何を置くかについて、調査と実践から分かったことのまとめ。2026-11 時点。
+What we learned, from a survey and from practice, about the landing page of
+an open source library, and above all what to put in the hero (the first
+screen). As of 2026-11.
 
-事例として [gawa](https://github.com/kt3k/gawa)（WebView 内のページとネイティブアプリをつなぐ型付きブリッジ）の LP を作り直した経緯を末尾に記録する。
+The case study at the end records how the landing page of
+[gawa](https://github.com/kt3k/gawa) was rebuilt. gawa is a typed bridge
+between a page inside a WebView and the native app that hosts it.
 
-## 結論
+## Conclusions
 
-1. **ライブラリのヒーローにはコードを置く。** 抽象的な図やロゴの大写しではなく、「使うとこう書ける」を見せる。
-2. **見出しは名前ではなく「何をするツールか」を言う。** 名前とロゴは小さなワードマークで足りる。
-3. **コードはファーストビューに収める。** 一般的なノート PC の画面（1280×800 程度）で、スクロールせずにコードの要点が全部見えることを目安にする。
-4. **2 つの側をつなぐツールは、両端のコードを対にして見せる。** 同じ名前で呼ぶ側と受ける側が一致することを、一目で分かるようにする。
+1. **Put code in a library's hero.** Show how it reads in use, not an
+   abstract diagram or a large logo.
+2. **Make the headline say what the tool does, not its name.** A small
+   wordmark is enough for the name and the logo.
+3. **Fit the code in the first screen.** On a common laptop screen (about
+   1280×800), the whole snippet should be visible without scrolling.
+4. **Show both ends of a tool that connects two sides.** Put the caller and
+   the handler side by side so the matching names read at a glance.
 
-## ツールの種類ごとのヒーロー
+## The hero by kind of tool
 
-| 種類 | ヒーローに置くもの | 例 |
+| Kind | What the hero shows | Examples |
 |---|---|---|
-| ライブラリ・SDK | 使い方のコード | tRPC、Hono、Tailwind |
-| ランタイム・CLI | インストールコマンド、ベンチマーク | Vite、Bun、Biome、Effect |
-| 大きなフレームワーク・製品 | ロゴ、アニメーション、製品 UI | Tauri、Electron、Astro |
+| Library or SDK | Code that uses it | tRPC, Hono, Tailwind |
+| Runtime or CLI | Install command, benchmarks | Vite, Bun, Biome, Effect |
+| Large framework or product | Logo, animation, product UI | Tauri, Electron, Astro |
 
-- ヒーローに抽象的な層の図（「Page / ライブラリ / WebView」のような積み重ね）を置いている事例は見つからなかった。
-- ロゴを大きく見せているのは、大きなフレームワークか、ヒーローに何も置かない LP（htmx、Zod）だった。小さなライブラリが真似る理由は薄い。
-- Tailwind や Biome は「入力 → 出力」を並べる。「呼ぶ → 結果が返る」の視覚化として使える。
+- No surveyed page puts an abstract layer diagram in the hero (a stack such
+  as "Page / library / WebView").
+- The pages that show a large logo are large frameworks, or pages with
+  almost nothing in the hero (htmx, Zod). A small library has little reason
+  to copy them.
+- Tailwind and Biome put input next to output. The same idea shows "call,
+  then get a result".
 
-## 2 つの側をつなぐツールの見せ方
+## Tools that connect two sides
 
-クライアントとサーバー、ページとネイティブ、メインスレッドとワーカーのように、両端を持つツールの事例。
+Examples of tools with two ends: client and server, page and native app,
+main thread and worker.
 
-- **tRPC**: ヒーローには呼ぶ側のコードだけを置き、「型はサーバーから来る」と一行添える。直後の「How it works」で両側を左右に並べる。
-- **Comlink**: main 側と worker 側のコードを対にして載せる。
-- **Capacitor**: Web 側の TypeScript とネイティブ側の Swift を同じタブ群に並べる。
+- **tRPC**: the hero shows only the calling side, with one line saying the
+  types come from the server. The "How it works" section right after puts
+  both sides next to each other.
+- **Comlink**: pairs the main-thread code with the worker code.
+- **Capacitor**: puts the web TypeScript and the native Swift in the same
+  set of tabs.
 
-推奨する形:
+The recommended shape:
 
-- 左に呼ぶ側、右に受ける側を置く。受ける側が複数言語なら（Swift / Kotlin など）タブで切り替える。
-- 間に矢印を置き、どちらが呼んでどちらが受けるかを示す（例: `call →`、`← emit`）。
-- 両端で同じメソッド名を使い、対応が目で追えるようにする。
-- 狭い画面では縦に積み、矢印も上下向きにする。または tRPC のように呼ぶ側だけ見せ、受ける側へリンクする。
+- The caller on the left, the handler on the right. When the handler side
+  has several languages (Swift and Kotlin, for example), switch them with
+  tabs.
+- Arrows between the two show which side calls and which side answers (for
+  example `call →` and `← emit`).
+- Use the same method name on both ends so the eye can follow the match.
+- On a narrow screen, stack the two and turn the arrows vertical. Or, like
+  tRPC, show only the caller and link to the handler.
 
-## ヒーロー以降の並び
+## After the hero
 
-ヒーローの直後は、利用企業ロゴか機能カード、次に 3 ステップの「How it works」がほぼ定番。続いて機能、社会的証明、最終 CTA の順。
+Right after the hero, the usual order is customer logos or feature cards,
+then a three-step "How it works", then features, social proof, and a final
+call to action.
 
-ただし、機能カードが既に 3 項目で同じ役割を果たしているなら、「How it works」を重ねて足す必要はない。
+If the feature cards already do the job of the three steps, do not add a
+"How it works" section on top of them.
 
-## 根拠
+## Evidence
 
-- **[Evil Martians: We studied 100 dev tool landing pages](https://evilmartians.com/chronicles/we-studied-100-devtool-landing-pages-here-is-what-actually-works-in-2025)**: 中央寄せのヒーローが主流。大きな見出しの下にビジュアルを 1 つ置く。UI の少ないライブラリ・SDK はコードスニペットを置くのが一般的。主張より動くコードと具体的な数字、派手な演出より簡潔さ。
-- **[DEV: Landing pages that convert for developer tools](https://dev.to/whoffagents/landing-pages-that-convert-for-developer-tools-patterns-that-actually-work-3c8k)**: ファーストビューのコードやデモは、長い説明文より早く中身が伝わる。
-- **閲覧時間の偏り**: Nielsen Norman Group の調査として「閲覧時間の 57% が最初の画面」という数字がよく引かれる（[二次情報](https://mixpanel.com/blog/optimizing-above-the-fold)。原典は未確認）。
-- **見出しの重要性**: 訪問者の多くは見出しとサブ見出しの冒頭だけで読み進めるか判断すると言われる（[参考](https://www.flint.com/blog/landing-page-headline-testing-statistics)。ベンダーのブログで、数字は割り引いて読む）。
+- **[Evil Martians: We studied 100 dev tool landing pages](https://evilmartians.com/chronicles/we-studied-100-devtool-landing-pages-here-is-what-actually-works-in-2025)**:
+  centered heroes are the norm, with one visual under a large headline.
+  Libraries and SDKs with little UI usually show a code snippet. Working
+  code beats claims, concrete numbers beat adjectives, and plain beats
+  flashy.
+- **[DEV: Landing pages that convert for developer tools](https://dev.to/whoffagents/landing-pages-that-convert-for-developer-tools-patterns-that-actually-work-3c8k)**:
+  code or a demo in the first screen says more, faster, than long copy.
+- **Where attention goes**: a Nielsen Norman Group finding that 57% of
+  viewing time is spent on the first screen is widely quoted
+  ([secondary source](https://mixpanel.com/blog/optimizing-above-the-fold);
+  the original was not checked).
+- **Why the headline matters**: many visitors are said to decide whether to
+  read on from the headline and the start of the subheadline alone
+  ([reference](https://www.flint.com/blog/landing-page-headline-testing-statistics);
+  a vendor blog, so discount its numbers).
 
-ロゴの大きさを直接比べた研究は見つからなかった。上の結論は、エージェンシーやベンダーの記事と、各 LP の実例からの判断。
+No study that compares logo sizes directly was found. The conclusions above
+are a judgment from agency and vendor articles and from real pages.
 
-### 調べた LP
+### Pages surveyed
 
-GitHub 上のサイトのソースで確認した: tRPC、Hono、Zod、Valibot、Vite、Tauri、Capacitor、htmx、Astro、Tailwind、Biome、Effect、Electron、Comlink。
+Checked against each site's source on GitHub: tRPC, Hono, Zod, Valibot,
+Vite, Tauri, Capacitor, htmx, Astro, Tailwind, Biome, Effect, Electron,
+Comlink.
 
-Bun と Hotwire は記憶ベースで未検証。Deno、Expo、Alpine は取得できなかった。各公式サイトには調査環境のネットワークから接続できなかったため、本番の表示とは差がありうる。
+Bun and Hotwire are from memory and unverified. Deno, Expo, and Alpine could
+not be fetched. The live sites were not reachable from the survey's network,
+so the deployed pages may differ.
 
-## 事例: gawa の LP
+## Case study: the gawa landing page
 
-1. **最初の状態**: ヒーロー右に「Page: `call` / `on`」「gawa: typed RPC and events」「WebView」の 3 段の層リスト。段名と API 名が同じ行に並び「page call on」と読めてしまう、呼び先のネイティブ側が図にない、という問題があった。
-2. **1 回目の修正**: 層リストをやめ、ページ側の `bridge.call("kv.get", …)` / `bridge.on("back", …)` と、アプリ側の `router.register("kv.get")` / `emit("back")`（Swift / Kotlin のタブ）を左右に並べた。間に `call →` と `← emit` の矢印。
-3. **2 回目の修正**: 上部の大きな漢字「側」が最初の画面の高さを約 170px 使い、1280×900 でもコードの上の数行しか見えなかった。側をワードマーク横の小さな印にし、h1 を名前の「gawa」から「A thin, typed bridge between a web page and the app that hosts it.」に変えた。1280×800 でコードの組が最後まで見えるようになった。
+1. **Starting point**: the right side of the hero held a three-row layer
+   list: "Page: `call` / `on`", "gawa: typed RPC and events", "WebView". The
+   row name and the API names sat on one line and read as "page call on",
+   and the native side that `call` reaches was missing from the picture.
+2. **First pass**: the layer list was replaced by the page's
+   `bridge.call("kv.get", …)` and `bridge.on("back", …)` next to the app's
+   `router.register("kv.get")` and `emit("back")` (Swift and Kotlin tabs),
+   with `call →` and `← emit` arrows between them.
+3. **Second pass**: a large kanji 側 at the top used about 170px of the first
+   screen, so even at 1280×900 only the first lines of the code were
+   visible. 側 became a small seal next to the wordmark, and the h1 changed
+   from the name "gawa" to "A thin, typed bridge between a web page and the
+   app that hosts it." At 1280×800 the whole code pair is now visible.
 
-学び:
+Lessons:
 
-- ブランド要素（漢字の名前など）は残してよいが、ファーストビューの面積を使わせない。
-- 見た目の確認は、デスクトップ（1280×800）、スマホ幅（390px）、ダークモードのスクリーンショットで行い、コードの組の下端の位置を数値で測る。
+- Keep brand elements (a kanji name, for example), but do not let them take
+  the space of the first screen.
+- Check the result with screenshots at desktop size (1280×800), phone width
+  (390px), and in dark mode, and measure where the bottom of the code pair
+  lands.
