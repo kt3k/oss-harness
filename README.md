@@ -9,3 +9,4 @@ and records the project where the lesson was learned.
 | Document | What it covers |
 |---|---|
 | [docs/landing-page.md](docs/landing-page.md) | What to put in a library's landing page hero, and how to show a tool that connects two sides. |
+| [docs/copywriting.md](docs/copywriting.md) | How to write the words on a library's landing page, with checks to run on each line. |
