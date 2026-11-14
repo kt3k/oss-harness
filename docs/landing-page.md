@@ -121,3 +121,108 @@ Lessons:
 - Check the result with screenshots at desktop size (1280×800), phone width
   (390px), and in dark mode, and measure where the bottom of the code pair
   lands.
+
+## How these conclusions were reached
+
+This section records the questions asked, what was compared, and where the
+evidence is weak, so the next review can repeat the work or challenge it
+instead of trusting the conclusions blindly.
+
+### The questions, in order
+
+Each question came from a concrete problem on the gawa page, not from a
+checklist.
+
+1. **What does the hero visual mean?** A reader could not tell what "Page:
+   `call` / `on`" meant. That made the question "what should go here at
+   all", not "how should this be worded".
+2. **What do comparable pages put in the hero?** Answered by a survey of
+   real pages (below).
+3. **Is a large brand mark worth its space?** After the code pair went in,
+   it still sat below the fold because of a large kanji. The question was
+   whether the mark earned that space.
+
+### What was compared on each page
+
+For every surveyed landing page, the same five things were recorded:
+
+- **The hero visual**: code (and whether it shows one side of the API or
+  both), install command, diagram, live demo, animation, benchmark,
+  screenshot, or logo.
+- **The headline and subheadline**: does the headline name the product or
+  say what it does?
+- **The calls to action**: what the buttons are, and whether an install
+  command is copyable in the hero.
+- **What follows the hero**: logos, feature cards, "How it works", and so
+  on.
+- **For two-sided tools**: how both ends are shown (side by side, tabs, one
+  side with a link, a diagram).
+
+The pages were then grouped by kind of tool (library or SDK, runtime or
+CLI, large framework or product). A pattern counted only when several pages
+of the same kind agreed. Advice from a page of a different kind (a
+framework's logo-first hero, for example) was not applied to a library.
+
+### Why these sites
+
+- **Libraries close to gawa in size and spirit** (tRPC, Hono, Zod, Valibot,
+  Comlink, htmx): the most relevant comparison.
+- **Tools that connect two sides** (tRPC, Comlink, Capacitor, Tauri,
+  Hotwire): the closest to gawa's problem of showing two ends.
+- **A few large, well-known tools** (Vite, Bun, Astro, Tailwind, Electron):
+  to see what changes with the kind of tool, so the library pattern is not
+  mistaken for a universal one.
+
+### How the evidence was weighed
+
+From strongest to weakest:
+
+1. **The pages themselves**, read from each site's source on GitHub. This is
+   what the tools actually do, but it says nothing about whether it works.
+2. **A survey of many pages** (Evil Martians, 100 pages): shows what is
+   common. Common is not the same as effective.
+3. **Studies of attention and headlines**: the 57% first-screen figure and
+   the headline studies. Most were reached only through secondary sources.
+4. **Practitioner and vendor blogs**: useful for direction. Their numbers
+   (conversion lifts and the like) were not used.
+
+No source measured the effect of logo size or of a code hero on a library
+page directly. The conclusions are a judgment that the pages and the
+weaker evidence point the same way. Treat them as a strong default, not a
+proven rule.
+
+### How the result was checked
+
+- Screenshots at 1280×800 (and 1280×900), 1440×900, a 390px phone width,
+  and in dark mode.
+- The position of the code pair was measured in the browser
+  (`getBoundingClientRect()` on the hero code block), so "fits in the first
+  screen" is a number, not an impression. Before the second pass the code
+  started at 680px of a 900px screen. After it, the whole pair ended at
+  763px of an 800px screen.
+- No horizontal scroll at any width (`document.documentElement.scrollWidth`
+  equal to the viewport width).
+
+### Limits of this round
+
+- The live sites and Evil Martians' article could not be reached from the
+  survey's network. Pages were read from their source, and the article from
+  search summaries and its Medium copy. The deployed pages may differ, and
+  animations or CMS-managed text (Capacitor's headline, for example) were
+  not seen.
+- Bun and Hotwire were described from memory. Deno, Expo, and Alpine were
+  not checked.
+- Nothing was measured with real visitors. There was no analytics data and
+  no A/B test.
+
+### Next time
+
+- Re-check the same five things on the same pages, and note what changed.
+  A pattern that several pages abandoned is worth more than one that is new.
+- Look at the live pages if the network allows, including the phone layout.
+- If the project has traffic, measure before and after: clicks on the
+  primary call to action, and how far visitors scroll. That would replace
+  the weakest part of this document, which is that nothing here was tested
+  on visitors.
+- Look for a primary source for the attention figures before citing them
+  again.
